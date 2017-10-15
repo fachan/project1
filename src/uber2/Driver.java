@@ -1,19 +1,20 @@
 package uber2;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Driver extends User implements Comparable<Driver> {
 	private LinkedList<Route> routes;
 	
-	private Vehicle car;
+	private Car car;
 	private boolean available;
 	private Rating rating;
 	
 	private static int START_RATING = 0;
 	
-	public Driver(String name, float balance, Vehicle car, boolean available) {
-		super(name, balance);
-
+	public Driver(/*String name, float balance, Vehicle car, boolean available*/HashMap properties) {
+		//super(name, balance);
+	   super(properties);
 		this.car = car;
 		this.available = available;
 		this.rating = new Rating(START_RATING);
@@ -21,7 +22,7 @@ public class Driver extends User implements Comparable<Driver> {
 		this.routes = new LinkedList<Route>();
 	}
 	
-	public Vehicle getCar() {
+	public Car getCar() {
 		return this.car;
 	}
 	
@@ -37,9 +38,9 @@ public class Driver extends User implements Comparable<Driver> {
 		routes.add(newRoute);
 	}
 	
-	public float computeBalance() {
+	/*public float computeBalance() {
 		return this.balance;
-	}
+	}*/
 	
 	public int compareTo(Driver otherDriver) {
 		return 1;

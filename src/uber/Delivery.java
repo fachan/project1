@@ -10,6 +10,6 @@ public class Delivery {
    }
    
    public float computeBalance() {
-      return this.balance;
+      return 0;//this.balance;
    }
 }

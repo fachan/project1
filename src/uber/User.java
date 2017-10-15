@@ -14,16 +14,16 @@ public class User {
 		//this.name = name;
 		//this.balance = balance;
 	   properties = new HashMap();
-	   properties.put()
+	   //properties.put()
 	}
 	
 	public String getName() {
-		return this.name;
+		return "";//this.name;
 	}
 	
 	public float getBalance() {
-		return this.balance;
+		return 0;//this.balance;
 	}
 	
-	public abstract float computeBalance();
+	//public abstract float computeBalance();
 }

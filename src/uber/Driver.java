@@ -38,7 +38,7 @@ public class Driver extends User implements Comparable<Driver> {
 	}
 	
 	public float computeBalance() {
-		return this.balance;
+		return 0;//this.balance;
 	}
 	
 	public int compareTo(Driver otherDriver) {

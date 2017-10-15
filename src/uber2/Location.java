@@ -3,12 +3,20 @@ package uber2;
 import java.lang.Math;
 
 public class Location {
-	private double x;
-	private double y;
+	private int x;
+	private int y;
 	
-	public Location(double x, double y) {
+	public Location(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public int getx() {
+	   return this.x;
+	}
+	
+	public int gety() {
+	   return this.y;
 	}
 	
 	public double getDistance(Location compareTo) {

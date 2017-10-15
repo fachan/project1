@@ -1,10 +1,5 @@
-Drivers
-3
-Jace Wayland, 50, coupe, occupied
-Jocelyn Fray, 1050, sedan, available
-Luke Garroway, 1900, truck, available
-
-Passengers
-2
-Clary Fray, 80
-Simon Lewis, 65
+NAME: Jace Wayland, BALANCE: 50, CAR: coupe, STATUS: occupied
+NAME: Jocelyn Fray, BALANCE: 1050, CAR: sedan, STATUS: available
+NAME: Luke Garroway, BALANCE: 1900, CAR: truck, STATUS: available
+NAME: Clary Fray, BALANCE: 80
+NAME: Simon Lewis, BALANCE: 65

@@ -10,14 +10,15 @@ public class Customer extends User {
    // time
    Delivery order;
    
-   public Customer(String name, float balance) {
-      super(name, balance);
+   public Customer(/*String name, float balance*/HashMap properties) {
+      //super(name, balance);
+      super(properties);
       //properties = new HashMap();
    }
    
    //sendRequest(Delivery order)
    
    public float computeBalance() {
-      
+      return 0;
    }
 }

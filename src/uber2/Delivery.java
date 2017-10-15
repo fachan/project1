@@ -1,6 +1,6 @@
 package uber2;
 
-public enum DeliveryType {
+public enum Delivery {
    PASSENGER, /*FOOD*/;
    
    public String toString() {
