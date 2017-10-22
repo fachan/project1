@@ -11,7 +11,7 @@ public class UberDriver {
 		Uber system = new Uber(/*-1, -1*/25, 20);
 		RequestHandler handler = new RequestHandler(system);
 		Meter meter = new Meter(handler, RATE);
-		Timer timer = new Timer(handler, SPEED);
+		RouteTimer timer = new RouteTimer(handler, SPEED);
 		
 		Request r10, r11, r12, r13, r14, r15;
 		

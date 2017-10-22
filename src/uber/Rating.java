@@ -9,11 +9,11 @@ public class Rating {
 		this.numRatings = numRatings;
 	}
 	
-	public double getRating() {
+	public double getScore() {
 		return this.score;
 	}
 	
-	public void setRating(double newScore) {
+	public void setScore(double newScore) {
 	   this.score = newScore;
 	}
 	
@@ -26,7 +26,7 @@ public class Rating {
 	}
 	
 	public void addRating(double newScore) {
-	   double s = getRating();
+	   double s = getScore();
 	   int ratings = getNumRatings();
 	   
 	   s = s * ratings;
@@ -34,14 +34,14 @@ public class Rating {
 
 	   ratings = ratings + 1;
 
-	   setRating(s / ratings);
+	   setScore(s / ratings);
 	   setNumRatings(ratings);
 	}
 	
 	public int compareTo(Rating rating2) {
-	   if (this.score > rating2.getRating()) {
+	   if (this.score > rating2.getScore()) {
 	      return -1;
-	   } else if (this.score < rating2.getRating()) {
+	   } else if (this.score < rating2.getScore()) {
 	      return 1;
 	   }
 	   

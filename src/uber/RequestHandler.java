@@ -7,17 +7,22 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.PriorityQueue;
+import java.util.Scanner;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class RequestHandler implements Comparator<Driver>, Subject {
    private Uber system;
    private Customer requester;
    private ArrayList<Observer> observers;
+   private static Lock inputLock;
    
    public RequestHandler(Uber system) {
       this.system = system;
       this.requester = null; // new Customer();?
       this.observers = new ArrayList<Observer>();
+      this.inputLock = new ReentrantLock();
    }
    
    public Customer getRequester() {
@@ -26,6 +31,14 @@ public class RequestHandler implements Comparator<Driver>, Subject {
    //might delete?
    public void setRequester(Customer requester) {
       this.requester = requester;
+   }
+   
+   public void setLock(boolean lock) {
+      if (lock) {
+         this.inputLock.lock();
+      } else {
+         this.inputLock.unlock();
+      }
    }
    
    private boolean verifyLocation(Request newRequest) {
@@ -162,6 +175,38 @@ public class RequestHandler implements Comparator<Driver>, Subject {
       
       printBorder();
       System.out.println();
+   }
+   
+   public void sendRating(Driver driver, Customer customer) {
+      Scanner in = new Scanner(System.in);
+
+      setLock(true);
+      
+      try {
+         System.out.println("Ride with driver " + driver.getID() + 
+               " for customer " + customer.getID() + " has ended.");
+         System.out.print("Enter rating (1-5) for driver " + driver.getID() + ": ");
+      
+      while (true) {
+         if (in.hasNextDouble()) {
+            double score = in.nextDouble();
+            
+            if ((score < 1) || (score > 5)) {
+               System.out.print("Please enter a score between 1 and 5: ");
+            } else {
+               Rating rating = driver.getRating();
+               rating.addRating(score);
+               
+               break;
+            }
+         }
+      }
+      
+      System.out.println(driver.getRating().getScore());
+      System.out.println("Score successfully added.");
+      } finally {
+      setLock(false);
+      }
    }
    
    /* Returns -1 if d1 comes before d2 (its distance to the requester is 
