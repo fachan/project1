@@ -3,9 +3,9 @@ package uber;
 import java.util.HashMap;
 
 public class User {
-	private HashMap properties;
-	private Location loc;
-	private int ID;
+	protected HashMap properties;
+	protected Location loc;
+	protected int ID;
 	
    //is it ok to have parameters here and initialize the thing?
    // do i need another enum for all the possible fields (keys) in the HM?

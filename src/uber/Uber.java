@@ -48,13 +48,13 @@ public class Uber {
 	   return this.cols;
 	}
 	
-	public void addDriver(Driver newDriver) {
+	/*public void addDriver(Driver newDriver) {
 	   
 	}
 	
 	public void addCustomer(Customer newCustomer) {
 	   
-	}
+	}*/
 	
 	public boolean withinGrid(Location loc) {
 	   int row = loc.getRow();
@@ -90,12 +90,6 @@ public class Uber {
    public HashMap<Integer, Customer> getCustomers() {
       return this.customers;
    }
-	
-	public Driver findDriver() {
-	   //while driver not found (end of queue not reached)s
-	   //try to find driver
-		return null;
-	}
 	
 	public void initGrid(String filename) throws FileNotFoundException {
 	   File inputFile = new File(filename);

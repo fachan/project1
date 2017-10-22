@@ -30,7 +30,6 @@ public class RequestHandlerTest {
       
       c1 = new Customer(cProperties);
       c1.setLocation(loc);
-      
       handler.setRequester(c1);
    }
    
@@ -42,6 +41,7 @@ public class RequestHandlerTest {
       
       d1 = new Driver(dProperties);
       d1.setLocation(loc);
+      d1.setID(1);
    }
    
    @Test

@@ -10,13 +10,17 @@ import java.util.Set;
 
 public class RequestHandler implements Comparator<Driver> {
    private Uber system;
-   private User requester;
+   private Customer requester;
    
    public RequestHandler(Uber system) {
       this.system = system;
       this.requester = null; // new Customer();?
    }
    
+   public Customer getRequester() {
+      return this.requester;
+   }
+   //might delete?
    public void setRequester(Customer requester) {
       this.requester = requester;
    }
@@ -31,16 +35,21 @@ public class RequestHandler implements Comparator<Driver> {
        * requester */
       if (src == null) {
          src = requester.getLocation();
+         newRequest.setSource(src);
       }
       
       if (!system.withinGrid(src)) {
-         System.out.println("The requested pickup location is not within " + 
-               "the Uber grid. Please try again.");
+         System.out.println("The requested pickup location " + 
+               src.getCol() + ", " + src.getRow() + " for user " + 
+               newRequest.getID() + " is not within the Uber grid. " + 
+               "Please try again.");
       }
 
       if (!system.withinGrid(dest)) {
-         System.out.println("The requested destination is not within the " +
-               "Uber grid. Please try again.");
+         System.out.println("The requested destination " + 
+               dest.getCol() + ", " + dest.getRow() + " for user " + 
+               newRequest.getID() + " is not within the Uber grid. " + 
+               "Please try again.");
       }
    }
    
@@ -70,28 +79,36 @@ public class RequestHandler implements Comparator<Driver> {
       return customers.get(ID);
    }
    
-   public Driver findDriver(PriorityQueue<Driver> drivers) {
+   public Driver findDriver(PriorityQueue<Driver> drivers, Request newRequest) {
       Driver next;
-      
+      Location src = newRequest.getSource();
+      Location dest = newRequest.getDestination();
+
       while ((next = drivers.poll()) != null) {
-         // if driver accepts
-         // return next;
+         if (next.addRequest(newRequest)) {
+            return next;
+         }
          // else
          // print an error message?
       }
       
-      System.out.println("No drivers found. Please try again later.");
       return null;
    }
    
-   //Customer? or user?
-   public void processRequest(int ID, Request newRequest) {
+   public void processRequest(Request newRequest) {
       //TODO: ask: priority queue for each customer...? 
       PriorityQueue<Driver> drivers;
       Driver driverChoice;
+      Location src, dest;
       
-      this.requester = findCustomer(ID);
+      //if (getRequester() == null) {
+        // System.out.println(newRequest.getID());
+         setRequester(findCustomer(newRequest.getID()));
+      //}
+   
       verifyLocation(newRequest);
+      src = newRequest.getSource();
+      dest = newRequest.getDestination();
       
       if (!system.hasDrivers()) {
          System.out.println("There are no drivers available. Exiting...");
@@ -99,7 +116,17 @@ public class RequestHandler implements Comparator<Driver> {
       }
 
       drivers = prioritizeDrivers();
-      driverChoice = findDriver(drivers);
+      driverChoice = findDriver(drivers, newRequest);
+      
+      if (driverChoice == null) {
+         System.out.println("No drivers found for trip from " + 
+               src.getCol() + ", " + src.getRow() + " to " + 
+               dest.getCol() + ", " + dest.getRow() + " for user " + 
+               newRequest.getID() + ". Please try again later.");
+      } else {
+         System.out.println("next driver: " + driverChoice.getID());
+      }
+      
       
       /*print distances
        * while(true) {
