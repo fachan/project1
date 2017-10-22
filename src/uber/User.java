@@ -1,29 +1,66 @@
 package uber;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class User {
-   private Map properties;
-	//protected String name;
-	//protected float balance;
+	private HashMap properties;
+	private Location loc;
+	private int ID;
 	
    //is it ok to have parameters here and initialize the thing?
    // do i need another enum for all the possible fields (keys) in the HM?
-	public User(String name, float balance) {
+	public User(HashMap properties) {
 		//this.name = name;
 		//this.balance = balance;
-	   properties = new HashMap();
-	   //properties.put()
+	   this.properties = properties;
+	}
+	
+	public HashMap getProperties() {
+	   return this.properties;
+	}
+	
+	public int getID() {
+	   return this.ID;
+	}
+	
+	public void setID(int ID) {
+	   this.ID = ID;
+	}
+	
+	public AccountType getAccountType() {
+	   HashMap tempProperties = getProperties();
+	   return Uber.getAccountType(tempProperties);
+	   /*String accountType;
+	   
+	   if (!tempProperties.containsKey(UserProperty.ACCOUNT)) {
+	      return null;
+	   }
+	   
+	   accountType = (String)tempProperties.get(UserProperty.ACCOUNT);
+	   return AccountType.valueOf(accountType.toUpperCase());*/
 	}
 	
 	public String getName() {
-		return "";//this.name;
+		return (String)getProperties().get(UserProperty.NAME);
+	}
+	/*
+	public void setBalance(float newBalance) {
+	   this.balance = newBalance;
 	}
 	
 	public float getBalance() {
-		return 0;//this.balance;
+		return this.balance;
+	}*/
+	
+	public void setLocation(Location newLoc) {
+	   this.loc = newLoc;
 	}
 	
-	//public abstract float computeBalance();
+	public Location getLocation() {
+	   return this.loc;
+	}
+	
+	public float computeBalance() {
+	   return 0;
+	}
 }

@@ -1,5 +1,15 @@
-NAME: Jace Wayland, BALANCE: 50, CAR: coupe, STATUS: occupied
-NAME: Jocelyn Fray, BALANCE: 1050, CAR: sedan, STATUS: available
-NAME: Luke Garroway, BALANCE: 1900, CAR: truck, STATUS: available
-NAME: Clary Fray, BALANCE: 80
-NAME: Simon Lewis, BALANCE: 65
+ACCOUNT: Driver, NAME: Jace Wayland, BALANCE: 15, CAR: convertible, STATUS: occupied
+ACCOUNT: Driver, NAME: Jocelyn Fray, BALANCE: 10, CAR: sedan, STATUS: available
+ACCOUNT: Driver, NAME: Luke Garroway, BALANCE: 29, CAR: truck, STATUS: available
+ACCOUNT: Driver, NAME: Alec Lightwood, BALANCE: 30, CAR: crossover, STATUS: occupied
+ACCOUNT: Driver, NAME: Catarina Loss, BALANCE: 25, CAR: sedan, STATUS: available
+ACCOUNT: Driver, NAME: Simon Lewis, BALANCE: 17, CAR: sedan, STATUS: available
+ACCOUNT: Driver, NAME: Jordan Kyle, BALANCE: 30, CAR: truck, STATUS: occupied
+ACCOUNT: Driver, NAME: Sebastian Verlac, BALANCE: 19, CAR: SUV, STATUS: occupied
+ACCOUNT: Driver, NAME: Maryse Lightwood, BALANCE: 35, CAR: sedan, STATUS: available
+ACCOUNT: Driver, NAME: Hodge Starkweather, BALANCE: 10, CAR: crossover, STATUS: available
+ACCOUNT: Customer, NAME: Clary Fray, BALANCE: 80
+ACCOUNT: Customer, NAME: Eric Hillchurch, BALANCE: 45
+ACCOUNT: Customer, NAME: Isabelle Lightwood, BALANCE: 70
+ACCOUNT: Customer, NAME: Magnus Bane, BALANCE: 100
+ACCOUNT: Customer, NAME: Maia Roberts, BALANCE: 50

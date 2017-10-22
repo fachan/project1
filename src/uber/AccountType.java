@@ -1,12 +1,12 @@
 package uber;
 
-public enum Delivery {
-   PASSENGER, /*FOOD*/;
+public enum AccountType {
+   DRIVER, CUSTOMER;
    
    public String toString() {
       switch(this) {
-         case PASSENGER:   return "Passenger";
-         //case FOOD:      return "Food";
+         case DRIVER:      return "Driver";
+         case CUSTOMER:    return "Customer";
          default:          return "Unspecified";
       }
    }

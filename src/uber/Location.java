@@ -3,17 +3,25 @@ package uber;
 import java.lang.Math;
 
 public class Location {
-	private double x;
-	private double y;
+	private int row;
+	private int col;
 	
-	public Location(double x, double y) {
-		this.x = x;
-		this.y = y;
+	public Location(int row, int col) {
+		this.row = row;
+		this.col = col;
 	}
 	
-	public double getDistance(Location compareTo) {
-		double xCoord = Math.pow(this.x - compareTo.x, 2);
-		double yCoord = Math.pow(this.y - compareTo.y, 2);
+	public int getRow() {
+	   return this.row;
+	}
+	
+	public int getCol() {
+	   return this.col;
+	}
+	
+	public double distanceTo(Location compareTo) {
+		double xCoord = Math.pow(getRow() - compareTo.getRow(), 2);
+		double yCoord = Math.pow(getCol() - compareTo.getCol(), 2);
 		
 		return Math.sqrt(xCoord + yCoord);
 	}

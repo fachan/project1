@@ -1,10 +1,11 @@
-package uber2;
+package uber;
 
 public enum UserProperty {
-   NAME, BALANCE, CAR, STATUS; //TODO: RATING INITIALIZED??
+   ACCOUNT, NAME, BALANCE, CAR, STATUS; //TODO: RATING INITIALIZED??
    
    public String toString() {
       switch(this) {
+         case ACCOUNT:     return "Account";
          case NAME:        return "Name";
          case BALANCE:     return "Balance";
          case CAR:         return "Car";

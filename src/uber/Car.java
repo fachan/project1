@@ -1,4 +1,4 @@
-package uber2;
+package uber;
 
 public class Car {
    private String type;
