@@ -105,7 +105,6 @@ public class RequestHandler implements Comparator<Driver>, Subject {
    }
    
    public void processRequest(Request newRequest) {
-      //TODO: ask: priority queue for each customer...? 
       PriorityQueue<Driver> drivers;
       Driver driverChoice;
       Location src, dest;
@@ -147,7 +146,6 @@ public class RequestHandler implements Comparator<Driver>, Subject {
          route.add(newRequest.getSource());
          route.add(newRequest.getDestination());
          notifyObservers(driverChoice, requester, route);
-         System.out.println("next driver: " + driverChoice.getID());
       }
       
       //print distances
@@ -165,7 +163,6 @@ public class RequestHandler implements Comparator<Driver>, Subject {
       printBorder();
       System.out.println();
    }
-   //public void sendStatus()
    
    /* Returns -1 if d1 comes before d2 (its distance to the requester is 
     * smaller than the distance from d2 to the requester), 0 if they have 
@@ -196,7 +193,10 @@ public class RequestHandler implements Comparator<Driver>, Subject {
    public void notifyObservers(Driver driver, Customer customer, 
          LinkedList<Location> route) {
       for (Observer o : observers) {
-         o.update(driver, customer, route);
+         double result = o.update(driver, customer, route);
+         if (result < 0) {
+            return;
+         }
       }
    }
 }

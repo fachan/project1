@@ -1,6 +1,8 @@
 package uber;
 
 import java.lang.Math;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public class Location {
 	private int row;
@@ -25,4 +27,24 @@ public class Location {
 		
 		return Math.sqrt(xCoord + yCoord);
 	}
+	
+   public static double getRouteDistance(LinkedList<Location> route) {
+      double distance = 0;
+      Location l1;
+      
+      if (route.isEmpty()) {
+         return 0;
+      }
+      
+      l1 = route.get(0);
+      
+      for (Iterator<Location> i = route.iterator(); i.hasNext(); ) {
+         Location l2 = i.next();
+         
+         distance += l1.distanceTo(l2);
+         l1 = l2;
+      }
+      
+      return distance;
+   }
 }

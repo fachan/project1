@@ -20,7 +20,7 @@ public class Customer extends User {
    
    //sendRequest(Delivery order)
    
-   public float computeBalance() {
-      return 0;
+   public double computeBalance(double fare) {
+      return this.getBalance() - fare;
    }
 }

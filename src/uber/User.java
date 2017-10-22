@@ -58,6 +58,6 @@ public class User {
 	}
 	
 	public double computeBalance(double fare) {
-	   return this.getBalance() - fare;
+	   return this.getBalance();
 	}
 }

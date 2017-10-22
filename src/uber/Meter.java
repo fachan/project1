@@ -7,8 +7,8 @@ public class Meter implements Observer {
    private double rate;
    
    public Meter(Subject handler, double rate) {
-      this.rate = rate;
       handler.registerObserver(this);
+      this.rate = rate;
    }
    
    public double getRate() {
@@ -23,29 +23,8 @@ public class Meter implements Observer {
       return numMiles * getRate();
    }
    
-   //TODO: should this be here?
-   public double getRouteDistance(LinkedList<Location> route) {
-      double distance = 0;
-      Location l1;
-      
-      if (route.isEmpty()) {
-         return 0;
-      }
-      
-      l1 = route.get(0);
-      
-      for (Iterator<Location> i = route.iterator(); i.hasNext(); ) {
-         Location l2 = i.next();
-         
-         distance += l1.distanceTo(l2);
-         l1 = l2;
-      }
-      
-      return distance;
-   }
-   
    public double getFare(LinkedList<Location> route) {
-      double distance = getRouteDistance(route);
+      double distance = Location.getRouteDistance(route);
       return distance * rate;
    }
    
