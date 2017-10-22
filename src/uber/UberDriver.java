@@ -3,11 +3,14 @@ package uber;
 import java.io.FileNotFoundException;
 
 public class UberDriver {
+   static final String INPUT_FILE = "./Input1.txt";
+	static final double RATE = 0.75;
+	
 	public static void main(String[] args) {
-		final String INPUT_FILE = "./Input1.txt";
-
 		Uber system = new Uber(/*-1, -1*/25, 20);
 		RequestHandler handler = new RequestHandler(system);
+		Meter meter = new Meter(handler, RATE);
+		
 		Request r10, r11, r12, r13, r14;
 		
 		try {

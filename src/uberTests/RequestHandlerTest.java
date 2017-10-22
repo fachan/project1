@@ -36,11 +36,15 @@ public class RequestHandlerTest {
    @Before
    public void initDriver() {
       Location loc = new Location(10, 15);
+      
       HashMap dProperties = new HashMap();
       dProperties.put(UserProperty.NAME, "d1");
       
+      Rating newRating = new Rating(1.5, 1);
+      
       d1 = new Driver(dProperties);
       d1.setLocation(loc);
+      d1.setRating(newRating);
       d1.setID(1);
    }
    
@@ -80,10 +84,15 @@ public class RequestHandlerTest {
 
    @Test
    public void testCompareSameDistance() {
-      /* Tests with same distance (compares by rating) */
-      /*User customer = new Customer()
-      Driver*/ 
-      fail("Not yet implemented");
+      Driver d2;
+      Location loc = new Location(10, 15);
+      HashMap testP = new HashMap();
+      Rating newRating = new Rating(4.1, 2);
+      
+      d2 = new Driver(testP);
+      d2.setLocation(loc);
+      
+      assertEquals(-1, ((RequestHandler)handler).compare(d1, d2));
    }
    
    @Test
@@ -100,17 +109,31 @@ public class RequestHandlerTest {
       Location loc2 = new Location(0, 0);
       HashMap testP2 = new HashMap();
       testP2.put(UserProperty.NAME, "d3");
+      Rating r3 = new Rating(4.1, 2);
       
       d3 = new Driver(testP2);
       d3.setLocation(loc2);
+      d3.setRating(r3);
+      
+      Driver d4;
+      Location loc4 = new Location(0, 0);
+      HashMap testP4 = new HashMap();
+      testP2.put(UserProperty.NAME, "d4");
+      Rating r4 = new Rating(3.3, 2);
+      
+      d4 = new Driver(testP4);
+      d4.setLocation(loc4);
+      d4.setRating(r4);
       
       PriorityQueue<Driver> drivers = new PriorityQueue(handler);
       
       drivers.add(d2);
       drivers.add(d1);
+      drivers.add(d4);
       drivers.add(d3);
       
       assertSame(d3, drivers.poll());
+      assertSame(d4, drivers.poll());
       assertSame(d1, drivers.poll());
       assertSame(d2, drivers.poll());
    }

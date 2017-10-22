@@ -4,17 +4,20 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-public class RequestHandler implements Comparator<Driver> {
+public class RequestHandler implements Comparator<Driver>, Subject {
    private Uber system;
    private Customer requester;
+   private ArrayList<Observer> observers;
    
    public RequestHandler(Uber system) {
       this.system = system;
       this.requester = null; // new Customer();?
+      this.observers = new ArrayList<Observer>();
    }
    
    public Customer getRequester() {
@@ -25,7 +28,7 @@ public class RequestHandler implements Comparator<Driver> {
       this.requester = requester;
    }
    
-   private void verifyLocation(Request newRequest) {
+   private boolean verifyLocation(Request newRequest) {
       Location src = newRequest.getSource();
       Location dest = newRequest.getDestination();
       int rows = system.getGridRows();
@@ -40,17 +43,21 @@ public class RequestHandler implements Comparator<Driver> {
       
       if (!system.withinGrid(src)) {
          System.out.println("The requested pickup location " + 
-               src.getCol() + ", " + src.getRow() + " for user " + 
+               src.getCol() + ", " + src.getRow() + " for customer " + 
                newRequest.getID() + " is not within the Uber grid. " + 
-               "Please try again.");
+               "Request canceled.");
+         return false;
       }
 
       if (!system.withinGrid(dest)) {
          System.out.println("The requested destination " + 
-               dest.getCol() + ", " + dest.getRow() + " for user " + 
+               dest.getCol() + ", " + dest.getRow() + " for customer " + 
                newRequest.getID() + " is not within the Uber grid. " + 
-               "Please try again.");
+               "Request canceled.");
+         return false;
       }
+      
+      return true;
    }
    
    private PriorityQueue<Driver> prioritizeDrivers() {
@@ -73,7 +80,7 @@ public class RequestHandler implements Comparator<Driver> {
       
       if (!customers.containsKey(ID)) {
          System.out.println("Customer ID " + ID + " not found. " + 
-               " Please try again.");
+               " Request canceled.");
       }
       
       return customers.get(ID);
@@ -88,11 +95,13 @@ public class RequestHandler implements Comparator<Driver> {
          if (next.addRequest(newRequest)) {
             return next;
          }
-         // else
-         // print an error message?
       }
       
       return null;
+   }
+   
+   private void printBorder() {
+      System.out.println("--------------------------------------------------");
    }
    
    public void processRequest(Request newRequest) {
@@ -101,17 +110,26 @@ public class RequestHandler implements Comparator<Driver> {
       Driver driverChoice;
       Location src, dest;
       
+      printBorder();
+      System.out.println("Customer ID: " + newRequest.getID());
+      
       //if (getRequester() == null) {
         // System.out.println(newRequest.getID());
          setRequester(findCustomer(newRequest.getID()));
       //}
    
-      verifyLocation(newRequest);
+      if (!verifyLocation(newRequest))
+      {
+         printBorder();
+         System.out.println();
+         return;
+      }
+      
       src = newRequest.getSource();
       dest = newRequest.getDestination();
       
       if (!system.hasDrivers()) {
-         System.out.println("There are no drivers available. Exiting...");
+         System.out.println("There are no drivers in the system. Exiting...");
          System.exit(0);
       }
 
@@ -124,20 +142,28 @@ public class RequestHandler implements Comparator<Driver> {
                dest.getCol() + ", " + dest.getRow() + " for user " + 
                newRequest.getID() + ". Please try again later.");
       } else {
+         LinkedList<Location> route = new LinkedList<Location>();
+         route.add(driverChoice.getLocation());
+         route.add(newRequest.getSource());
+         route.add(newRequest.getDestination());
+         notifyObservers(driverChoice, requester, route);
          System.out.println("next driver: " + driverChoice.getID());
       }
       
-      
-      /*print distances
-       * while(true) {
+      //print distances
+       /* while(true) {
          Driver nextDriver = drivers.poll();
          
          if (nextDriver == null)
             break;
          double distance = 
                requester.getLocation().distanceTo(nextDriver.getLocation());
-         System.out.println(distance);
-      }*/
+         System.out.printf("%3f ", distance);
+      }
+        System.out.println();*/
+      
+      printBorder();
+      System.out.println();
    }
    //public void sendStatus()
    
@@ -157,5 +183,20 @@ public class RequestHandler implements Comparator<Driver> {
       } 
 
       return (d1.getRating()).compareTo(d2.getRating());
+   }
+   
+   public void registerObserver(Observer o) {
+      observers.add(o);
+   }
+   
+   public void removeObserver(Observer o) {
+      observers.remove(o);
+   }
+   
+   public void notifyObservers(Driver driver, Customer customer, 
+         LinkedList<Location> route) {
+      for (Observer o : observers) {
+         o.update(driver, customer, route);
+      }
    }
 }
