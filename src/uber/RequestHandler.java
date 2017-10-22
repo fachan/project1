@@ -2,8 +2,11 @@ package uber;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.PriorityQueue;
+import java.util.Set;
 
 public class RequestHandler implements Comparator<Driver> {
    private Uber system;
@@ -21,20 +24,50 @@ public class RequestHandler implements Comparator<Driver> {
    private void verifyLocation(Request newRequest) {
       Location src = newRequest.getSource();
       Location dest = newRequest.getDestination();
+      int rows = system.getGridRows();
+      int cols = system.getGridCols();
       
-      //if (src.withinGrid(system.g))
+      /* If the location is null, put the source as the location of the 
+       * requester */
+      if (src == null) {
+         src = requester.getLocation();
+      }
+      
+      if (!system.withinGrid(src)) {
+         System.out.println("The requested pickup location is not within " + 
+               "the Uber grid. Please try again.");
+      }
+
+      if (!system.withinGrid(dest)) {
+         System.out.println("The requested destination is not within the " +
+               "Uber grid. Please try again.");
+      }
    }
    
    private PriorityQueue<Driver> prioritizeDrivers() {
       PriorityQueue<Driver> drivers = new 
             PriorityQueue<Driver>(this);
       
-      for (Iterator<Driver> i = system.getDrivers().iterator(); i.hasNext(); ) {
-         Driver newDriver = i.next();
+      HashMap<Integer, Driver> driverList = system.getDrivers();
+      Set<Integer> entries = driverList.keySet();
+      
+      for (Iterator<Integer> i = entries.iterator(); i.hasNext(); ) {
+         Driver newDriver = driverList.get(i.next());
          drivers.add(newDriver);
       }
       
       return drivers;
+   }
+   
+   public Customer findCustomer(int ID) {
+      HashMap<Integer, Customer> customers = system.getCustomers();
+      
+      if (!customers.containsKey(ID)) {
+         System.out.println("Customer ID " + ID + " not found. " + 
+               " Please try again.");
+      }
+      
+      return customers.get(ID);
    }
    
    public Driver findDriver(PriorityQueue<Driver> drivers) {
@@ -52,12 +85,12 @@ public class RequestHandler implements Comparator<Driver> {
    }
    
    //Customer? or user?
-   public void processRequest(Customer customer, Request newRequest) {
+   public void processRequest(int ID, Request newRequest) {
       //TODO: ask: priority queue for each customer...? 
       PriorityQueue<Driver> drivers;
       Driver driverChoice;
       
-      //this.requester = customer;
+      this.requester = findCustomer(ID);
       verifyLocation(newRequest);
       
       if (!system.hasDrivers()) {

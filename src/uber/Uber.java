@@ -19,7 +19,8 @@ public class Uber {
 	private User[][] grid;
 	private int rows;
 	private int cols;
-	private ArrayList<Driver> drivers;
+	private HashMap<Integer, Driver> drivers;
+	private HashMap<Integer, Customer> customers;
 	
 	public Uber(int rows, int cols) {
 	   this.rows = rows;
@@ -34,7 +35,8 @@ public class Uber {
 	   } 
 	   
 	   this.grid = new User[this.rows][this.cols];	   
-	   this.drivers = new ArrayList<Driver>();
+	   this.drivers = new HashMap<Integer, Driver>();
+	   this.customers = new HashMap<Integer, Customer>();
 	   this.nextUserID = 0;
 	}
 	
@@ -54,6 +56,21 @@ public class Uber {
 	   
 	}
 	
+	public boolean withinGrid(Location loc) {
+	   int row = loc.getRow();
+	   int col = loc.getCol();
+	   
+	   if ((row < 0) || (row >= getGridRows())) {
+	      return false;
+	   }
+	   
+	   if ((col < 0) || (col >= getGridCols())) {
+         return false;
+      }
+	   
+	   return true;
+	}
+	
 	public boolean hasDrivers() {
 	   if (getDrivers() == null) {
 	      return false;
@@ -66,11 +83,13 @@ public class Uber {
 	   return true;
 	}
 	
-	public ArrayList<Driver> getDrivers() {
-	   //for (Iterator i = this.drivers; )
-	   
+	public HashMap<Integer, Driver> getDrivers() {
 	   return this.drivers;
 	}
+	  
+   public HashMap<Integer, Customer> getCustomers() {
+      return this.customers;
+   }
 	
 	public Driver findDriver() {
 	   //while driver not found (end of queue not reached)s
@@ -143,9 +162,10 @@ public class Uber {
       /* TODO: UGH */
       if (Uber.getAccountType(newMap).equals(AccountType.DRIVER)) {
          newUser = new Driver(newMap);
-         drivers.add((Driver)newUser);
+         drivers.put(nextUserID, (Driver)newUser);
       } else {
          newUser = new Customer(newMap);
+         customers.put(nextUserID, (Customer)newUser);
       }
       
       // Set other user information
@@ -171,14 +191,42 @@ public class Uber {
 	
 	public void printGrid() {
 	   int x, y;
+	   int rows = getGridRows();
+	   int cols = getGridCols();
+	   // TODO: move??
+	   final String STR_FORMAT = "%5s";
+	   final String INT_FORMAT = "%5d";
+	   final String CUSTOMER_STR = "C";
+	   final String DRIVER_STR = "D";
 	   
-	   for (y = 0; y < this.rows; y++) {
-	      for (x = 0; x < this.cols; x++) {
+	   /* Print column headers */
+	   System.out.printf(STR_FORMAT, "");
+	   
+	   for (x = 0; x < cols; x++) {
+	      System.out.printf(INT_FORMAT, x);
+	   }
+	   
+	   System.out.println();
+	   
+	   for (y = 0; y < rows; y++) {
+	      /* Print row header */
+	      System.out.printf(INT_FORMAT, y);
+	      
+	      for (x = 0; x < cols; x++) {
+	         
             if (grid[y][x] == null) {
-               System.out.print("null ");
+               System.out.printf(STR_FORMAT, "-");
             }
             else {
-               System.out.print("USER ");
+               User user = grid[y][x];
+               HashMap map = user.getProperties();
+               
+               if (Uber.getAccountType(map).equals(AccountType.DRIVER)) {
+                  System.out.printf(STR_FORMAT, user.getID() + DRIVER_STR);
+               } else {
+                  System.out.printf(STR_FORMAT, user.getID() + CUSTOMER_STR);
+               }
+             
             }
          }
          

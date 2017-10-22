@@ -9,7 +9,7 @@ public class Request {
    public Request(Location src, Location dest, /* time */int numItems) {
       this.src = src;
       this.dest = dest;
-      this.numItems = numItems;
+      this.numItems = numItems; // TODO: maybe don't do this?
    }
    
    public Location getSource() {
