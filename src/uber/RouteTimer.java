@@ -21,7 +21,6 @@ public class RouteTimer implements Observer {
         
          public void run() {
             handler.sendRating(driver, customer);
-            System.out.println("timer " + timeEstimate);
             timer.cancel();
          }
         

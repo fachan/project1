@@ -177,22 +177,17 @@ public class RequestHandler implements Comparator<Driver>, Subject {
       System.out.println();
    }
    
-   public void sendRating(Driver driver, Customer customer) {
+   public void getScore(Driver driver) {
       Scanner in = new Scanner(System.in);
-
-      setLock(true);
-      
-      try {
-         System.out.println("Ride with driver " + driver.getID() + 
-               " for customer " + customer.getID() + " has ended.");
-         System.out.print("Enter rating (1-5) for driver " + driver.getID() + ": ");
+      System.out.print("Enter rating (1-5) for driver " + driver.getID() + ": ");
       
       while (true) {
          if (in.hasNextDouble()) {
             double score = in.nextDouble();
+            in.nextLine();
             
             if ((score < 1) || (score > 5)) {
-               System.out.print("Please enter a score between 1 and 5: ");
+               System.out.print("\tPlease enter a score between 1 and 5: ");
             } else {
                Rating rating = driver.getRating();
                rating.addRating(score);
@@ -201,11 +196,19 @@ public class RequestHandler implements Comparator<Driver>, Subject {
             }
          }
       }
+   }
+   
+   public void sendRating(Driver driver, Customer customer) {
+      setLock(true);
       
-      System.out.println(driver.getRating().getScore());
-      System.out.println("Score successfully added.");
+      try {
+         System.out.println("Ride with driver " + driver.getID() + 
+               " for customer " + customer.getID() + " has ended.");
+         
+         getScore(driver);
+         System.out.println("\tScore successfully added.\n");
       } finally {
-      setLock(false);
+         setLock(false);
       }
    }
    
