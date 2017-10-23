@@ -38,6 +38,6 @@ public class UberDriver {
 		handler.processRequest(r14);
 		handler.processRequest(r15);
 		
-		//system.printGrid();
+		system.printGrid();
 	}
 }

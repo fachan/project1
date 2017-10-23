@@ -10,11 +10,11 @@ import java.util.Random;
 
 public class Uber {
 	private static final int GRID_SIZE = 10;
-	private static final String ENTRY_DELIMITER = ", ";
+	/*private static final String ENTRY_DELIMITER = ", ";
 	private static final String CATEGORY_DELIMITER = ": ";
 	private static final int CATEGORY_LOC = 0;
 	private static final int VALUE_LOC = 1;
-	private static int nextUserID;
+	*/private static int nextUserID;
 	
 	private User[][] grid;
 	private int rows;
@@ -96,12 +96,8 @@ public class Uber {
 	   Scanner in = new Scanner(inputFile);
 	   Random rand = new Random();
 	   int row, col;
-	   User newUser = null; /**/
-	   
-	   // TODO: ask about COLLISIONS? (can have if you want)
-	   // TODO: ask about using HashMap rather than Map?? (will there ever be another map?)
+
 	   // TODO: does she want a Car class, or a title..?
-	   //enum for different users and their properties
 	   
 	   // Get each user (each line in the input file)
 	   while (in.hasNextLine()) {
@@ -117,7 +113,13 @@ public class Uber {
 	   printGrid();
 	}
 	
-	private HashMap parseProperties(String properties) {
+	public void setLocation(User user, Location destination) {
+	   user.setLocation(destination);
+	   grid[user.getLocation().getRow()][user.getLocation().getCol()] = null;
+      grid[destination.getRow()][destination.getCol()] = user;
+	}
+	
+	/*private static HashMap parseProperties(String properties) {
       String[] entry;
       UserProperty property;
       HashMap newMap = new HashMap();
@@ -141,20 +143,20 @@ public class Uber {
       
       in.close();
       return newMap;
-	}
+	}*/
 	
-	public static AccountType getAccountType(HashMap map) {
+	/*public static AccountType getAccountType(HashMap map) {
 	   String accountType = (String)map.get(UserProperty.ACCOUNT);
 	   return AccountType.valueOf(accountType.toUpperCase());
-	}
+	}*/
 	
 	// TODO: split into different functions
 	private void placeUser(String properties, Location loc) {
-	   HashMap newMap = parseProperties(properties);
+	   HashMap newMap = UberHelper.parseProperties(properties);
 	   User newUser;
 	   
       /* TODO: UGH */
-      if (Uber.getAccountType(newMap).equals(AccountType.DRIVER)) {
+      if (UberHelper.getAccountType(newMap).equals(AccountType.DRIVER)) {
          newUser = new Driver(newMap);
          drivers.put(nextUserID, (Driver)newUser);
       } else {
@@ -173,7 +175,7 @@ public class Uber {
             newUser;
 	}
 	
-	private UserProperty getCategory(String input) {
+	/*public static UserProperty getCategory(String input) {
 	   for (UserProperty p : UserProperty.values()) {
 	      if (p.name().equals(input)) {
 	         return p;
@@ -181,7 +183,7 @@ public class Uber {
 	   }
 	   
 	   return null;
-	}
+	}*/
 	
 	public void printGrid() {
 	   int x, y;
@@ -215,7 +217,7 @@ public class Uber {
                User user = grid[y][x];
                HashMap map = user.getProperties();
                
-               if (Uber.getAccountType(map).equals(AccountType.DRIVER)) {
+               if (UberHelper.getAccountType(map).equals(AccountType.DRIVER)) {
                   System.out.printf(STR_FORMAT, user.getID() + DRIVER_STR);
                } else {
                   System.out.printf(STR_FORMAT, user.getID() + CUSTOMER_STR);

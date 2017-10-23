@@ -1,7 +1,7 @@
 package uber;
 
 public enum UserProperty {
-   ACCOUNT, NAME, BALANCE, CAR, STATUS; //TODO: RATING INITIALIZED??
+   ACCOUNT, NAME, BALANCE, CAR, STATUS;
    
    public String toString() {
       switch(this) {

@@ -48,33 +48,41 @@ public class Meter implements Observer {
       double oldCustomer = customer.getBalance();
       
       if (updateBalance(driver, customer, fare) < 0) {
-         System.out.println("Transaction failed: Insufficient funds. ");
-         System.out.printf("\tFare: %.2f\n", fare);
-         System.out.println("\tCustomer " + customer.getID() + " balance: " + 
-               customer.getBalance());
+         printTransactionFailure(customer, fare);
          return -1;
       }
+   
+      printReceipt(driver, customer, oldDriver, oldCustomer, fare);
       
-      // TODO: split into function
-      System.out.println("Receipt:");
+      return fare;
+   }
+   
+   public void printTransactionFailure(Customer customer, double fare) {
+      System.out.println("Transaction failed: Insufficient funds. ");
+      System.out.printf("\tFare: %.2f\n", fare);
+      System.out.println("\tCustomer " + customer.getID() + " balance: " + 
+            customer.getBalance());
+   }
+   
+   public void printReceipt(Driver driver, Customer customer, 
+         double oldCBalance, double oldDBalance, double fare) {
+            System.out.println("Receipt:");
       System.out.printf("\tFare: %.2f\n", fare);
       
       System.out.println();
       
       System.out.println("\tCustomer balance: ");
-      System.out.printf("\t\t  %.2f\n", oldCustomer);
+      System.out.printf("\t\t  %.2f\n", oldCBalance);
       System.out.printf("\t\t- %.2f\n", fare);
       System.out.printf("\t\t= %.2f\n", customer.getBalance());
       
       System.out.println();
       
       System.out.println("\tDriver balance: ");
-      System.out.printf("\t\t  %.2f\n", oldDriver);
+      System.out.printf("\t\t  %.2f\n", oldDBalance);
       System.out.printf("\t\t+ %.2f\n", fare);
       System.out.printf("\t\t= %.2f\t* %1.2f\n", 
             driver.getBalance() / Driver.DRIVER_SHARE, Driver.DRIVER_SHARE);
       System.out.printf("\t\t= %.2f\n", driver.getBalance());
-      
-      return fare;
    }
 }

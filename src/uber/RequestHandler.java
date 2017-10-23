@@ -17,20 +17,24 @@ public class RequestHandler implements Comparator<Driver>, Subject {
    private Customer requester;
    private ArrayList<Observer> observers;
    private static Lock inputLock;
+   private boolean requesterSet;
    
    public RequestHandler(Uber system) {
       this.system = system;
-      this.requester = null; // new Customer();?
+      this.requester = null;
       this.observers = new ArrayList<Observer>();
-      this.inputLock = new ReentrantLock();
+      RequestHandler.inputLock = new ReentrantLock();
+      this.requesterSet = false;
    }
    
    public Customer getRequester() {
       return this.requester;
    }
-   //might delete?
+   
+   /* For testing purposes */
    public void setRequester(Customer requester) {
       this.requester = requester;
+      this.requesterSet = true;
    }
    
    public void setLock(boolean lock) {
@@ -38,6 +42,13 @@ public class RequestHandler implements Comparator<Driver>, Subject {
          this.inputLock.lock();
       } else {
          this.inputLock.unlock();
+      }
+   }
+   
+   public void checkDrivers() {
+      if (!system.hasDrivers()) {
+         System.out.println("There are no drivers in the system. Exiting...");
+         System.exit(0);
       }
    }
    
@@ -54,19 +65,15 @@ public class RequestHandler implements Comparator<Driver>, Subject {
          newRequest.setSource(src);
       }
       
+      printRequestInfo(newRequest);
+      
       if (!system.withinGrid(src)) {
-         System.out.println("The requested pickup location " + 
-               src.getCol() + ", " + src.getRow() + " for customer " + 
-               newRequest.getID() + " is not within the Uber grid. " + 
-               "Request canceled.");
+         printOutOfGrid(newRequest.getID(), src);
          return false;
       }
 
       if (!system.withinGrid(dest)) {
-         System.out.println("The requested destination " + 
-               dest.getCol() + ", " + dest.getRow() + " for customer " + 
-               newRequest.getID() + " is not within the Uber grid. " + 
-               "Request canceled.");
+         printOutOfGrid(newRequest.getID(), dest);
          return false;
       }
       
@@ -92,8 +99,7 @@ public class RequestHandler implements Comparator<Driver>, Subject {
       HashMap<Integer, Customer> customers = system.getCustomers();
       
       if (!customers.containsKey(ID)) {
-         System.out.println("Customer ID " + ID + " not found. " + 
-               " Request canceled.");
+         printIDError(ID);
       }
       
       return customers.get(ID);
@@ -113,22 +119,16 @@ public class RequestHandler implements Comparator<Driver>, Subject {
       return null;
    }
    
-   private void printBorder() {
-      System.out.println("--------------------------------------------------");
-   }
-   
    public void processRequest(Request newRequest) {
       PriorityQueue<Driver> drivers;
       Driver driverChoice;
       Location src, dest;
       
       printBorder();
-      System.out.println("Customer ID: " + newRequest.getID());
       
-      //if (getRequester() == null) {
-        // System.out.println(newRequest.getID());
+      if (this.requesterSet == false) {
          setRequester(findCustomer(newRequest.getID()));
-      //}
+      }
    
       if (!verifyLocation(newRequest))
       {
@@ -140,25 +140,23 @@ public class RequestHandler implements Comparator<Driver>, Subject {
       src = newRequest.getSource();
       dest = newRequest.getDestination();
       
-      if (!system.hasDrivers()) {
-         System.out.println("There are no drivers in the system. Exiting...");
-         System.exit(0);
-      }
+      checkDrivers();
 
       drivers = prioritizeDrivers();
       driverChoice = findDriver(drivers, newRequest);
       
       if (driverChoice == null) {
-         System.out.println("No drivers found for trip from " + 
-               src.getCol() + ", " + src.getRow() + " to " + 
-               dest.getCol() + ", " + dest.getRow() + " for user " + 
-               newRequest.getID() + ". Please try again later.");
+         printNoDrivers(newRequest);
       } else {
          LinkedList<Location> route = new LinkedList<Location>();
          route.add(driverChoice.getLocation());
          route.add(newRequest.getSource());
          route.add(newRequest.getDestination());
+         
          notifyObservers(driverChoice, requester, route);
+         
+         system.setLocation(driverChoice, newRequest.getDestination());
+         system.setLocation(requester, newRequest.getDestination());
       }
       
       //print distances
@@ -194,6 +192,10 @@ public class RequestHandler implements Comparator<Driver>, Subject {
                
                break;
             }
+         } else {
+            System.out.print("\tInput is not a number. " +
+                  "Please enter a score between 1 and 5: ");
+            in.nextLine();
          }
       }
    }
@@ -246,5 +248,42 @@ public class RequestHandler implements Comparator<Driver>, Subject {
             return;
          }
       }
+   }
+   
+   private void printRequestInfo(Request newRequest) {
+      Location src = newRequest.getSource();
+      Location dest = newRequest.getDestination();
+      
+      System.out.println("Customer ID: " + newRequest.getID());
+      System.out.println("New request: (" + src.getRow() + ", " + 
+            src.getCol() + ") to (" + dest.getRow() + ", " +
+            dest.getCol() + ")");
+      System.out.println();
+   }
+   
+   private void printOutOfGrid(int ID, Location loc) {
+      System.out.println("The requested pickup/destination location " + 
+            loc.getCol() + ", " + loc.getRow() + " for customer " + 
+            ID + " is not within the Uber grid. " + 
+            "Request canceled.");
+   }
+   
+   private void printIDError(int ID) {
+      System.out.println("Customer ID " + ID + " not found. " + 
+            " Request canceled.");
+   }
+   
+   private void printNoDrivers(Request newRequest) {
+      Location src = newRequest.getSource();
+      Location dest = newRequest.getDestination();
+      
+      System.out.println("No drivers found for trip from " + 
+            src.getCol() + ", " + src.getRow() + " to " + 
+            dest.getCol() + ", " + dest.getRow() + " for user " + 
+            newRequest.getID() + ". Please try again later.");
+   }
+   
+   private void printBorder() {
+      System.out.println("--------------------------------------------------");
    }
 }

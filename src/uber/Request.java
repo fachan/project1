@@ -5,9 +5,8 @@ public class Request {
    private Location src;
    private Location dest;
    private int numItems;
-   /* time */
    
-   public Request(int ID, Location src, Location dest, /* time */int numItems) {
+   public Request(int ID, Location src, Location dest, int numItems) {
       this.ID = ID;
       this.src = src;
       this.dest = dest;

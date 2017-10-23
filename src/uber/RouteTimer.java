@@ -26,8 +26,20 @@ public class RouteTimer implements Observer {
         
       },Math.round(100 * timeEstimate));
    }
+
+   public double update(Driver driver, Customer customer, 
+         LinkedList<Location> route) {
+      Location src = route.get(1);
+      double distance = driver.getLocation().distanceTo(src);
+      double timeEstimate = distance * speed;
+     
+      displayWaitTime(driver, route.get(1), timeEstimate);
+      startTimer(driver, customer, timeEstimate);
+      
+      return timeEstimate;
+   }
    
-   public void displayWaitTime(Driver driver, Location source, 
+   public void displayWaitTime(Driver driver, Location source,
          double timeEstimate) {
       Location driverLoc = driver.getLocation();
       
@@ -36,16 +48,5 @@ public class RouteTimer implements Observer {
          source.getCol() + ") from (" + driverLoc.getRow() + ", " +
          driverLoc.getCol() + ") is ");
       System.out.printf("%.2f minutes.\n", timeEstimate);
-   }
-   
-   public double update(Driver driver, Customer customer, 
-         LinkedList<Location> route) {
-      double distance = Location.getRouteDistance(route);
-      double timeEstimate = distance * speed;
-     
-      displayWaitTime(driver, route.get(1), timeEstimate);
-      startTimer(driver, customer, timeEstimate);
-      
-      return timeEstimate;
    }
 }

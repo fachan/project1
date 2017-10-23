@@ -27,10 +27,10 @@ public class User {
 	   this.ID = ID;
 	}
 	
-	public AccountType getAccountType() {
+	/*public AccountType getAccountType() {
 	   HashMap tempProperties = getProperties();
-	   return Uber.getAccountType(tempProperties);
-	}
+	   return UberHelper.getAccountType(tempProperties);
+	}*/
 	
 	public String getName() {
 		return (String)getProperties().get(UserProperty.NAME);
