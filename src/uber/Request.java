@@ -4,13 +4,11 @@ public class Request {
    private int ID;
    private Location src;
    private Location dest;
-   private int numItems;
    
-   public Request(int ID, Location src, Location dest, int numItems) {
+   public Request(int ID, Location src, Location dest) {
       this.ID = ID;
       this.src = src;
       this.dest = dest;
-      this.numItems = numItems; // TODO: maybe don't do this?
    }
    
    public int getID() {
@@ -33,7 +31,7 @@ public class Request {
       return this.dest;
    }
    
-   public int getCapacity() {
-      return this.numItems;
+   public void setDestination(Location newDest) {
+      this.dest = newDest;
    }
 }

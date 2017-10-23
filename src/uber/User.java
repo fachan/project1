@@ -7,11 +7,7 @@ public class User {
 	protected Location loc;
 	protected int ID;
 	
-   //is it ok to have parameters here and initialize the thing?
-   // do i need another enum for all the possible fields (keys) in the HM?
 	public User(HashMap<UserProperty, String> properties) {
-		//this.name = name;
-		//this.balance = balance;
 	   this.properties = properties;
 	}
 	
@@ -26,11 +22,6 @@ public class User {
 	public void setID(int ID) {
 	   this.ID = ID;
 	}
-	
-	/*public AccountType getAccountType() {
-	   HashMap tempProperties = getProperties();
-	   return UberHelper.getAccountType(tempProperties);
-	}*/
 	
 	public String getName() {
 		return (String)getProperties().get(UserProperty.NAME);

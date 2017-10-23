@@ -57,14 +57,14 @@ public class Meter implements Observer {
       return fare;
    }
    
-   public void printTransactionFailure(Customer customer, double fare) {
+   private void printTransactionFailure(Customer customer, double fare) {
       System.out.println("Transaction failed: Insufficient funds. ");
       System.out.printf("\tFare: %.2f\n", fare);
-      System.out.println("\tCustomer " + customer.getID() + " balance: " + 
-            customer.getBalance());
+      System.out.printf("\tCustomer %d balance: %.2f\n",
+            customer.getID(), customer.getBalance());
    }
    
-   public void printReceipt(Driver driver, Customer customer, 
+   private void printReceipt(Driver driver, Customer customer, 
          double oldCBalance, double oldDBalance, double fare) {
             System.out.println("Receipt:");
       System.out.printf("\tFare: %.2f\n", fare);
@@ -84,5 +84,7 @@ public class Meter implements Observer {
       System.out.printf("\t\t= %.2f\t* %1.2f\n", 
             driver.getBalance() / Driver.DRIVER_SHARE, Driver.DRIVER_SHARE);
       System.out.printf("\t\t= %.2f\n", driver.getBalance());
+      
+      System.out.println();
    }
 }

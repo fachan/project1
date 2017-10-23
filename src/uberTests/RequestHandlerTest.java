@@ -49,12 +49,32 @@ public class RequestHandlerTest {
    }
    
    @Test
+   public void testCheckDrivers() {
+      fail("Not yet implemented");
+   }
+
+   @Test
+   public void testFindCustomer() {
+      fail("Not yet implemented");
+   }
+
+   @Test
    public void testFindDriver() {
       fail("Not yet implemented");
    }
 
    @Test
    public void testProcessRequest() {
+      fail("Not yet implemented");
+   }
+
+   @Test
+   public void testGetScore() {
+      fail("Not yet implemented");
+   }
+
+   @Test
+   public void testSendRating() {
       fail("Not yet implemented");
    }
 
@@ -136,6 +156,11 @@ public class RequestHandlerTest {
       assertSame(d4, drivers.poll());
       assertSame(d1, drivers.poll());
       assertSame(d2, drivers.poll());
+   }
+
+   @Test
+   public void testNotifyObservers() {
+      fail("Not yet implemented");
    }
    
 }

@@ -10,8 +10,6 @@ import uber.*;
 public class UberTest {
    private static Uber system;
    
- //initGrid
-   
    @Before
    public void initUberTest() {
       system = new Uber(10, 5);
@@ -71,13 +69,12 @@ public class UberTest {
    }
 
    @Test
-   public void testFindDriver() {
+   public void testSetLocation() {
       fail("Not yet implemented");
    }
 
    @Test
-   public void testGetAccountType() {
+   public void testFindDriver() {
       fail("Not yet implemented");
    }
-
 }

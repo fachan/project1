@@ -16,18 +16,22 @@ public class Driver extends User {
       this.rating = new Rating(START_RATING, 0);
 	}
 	
-	/*public String getCar() {
+	public String getCar() {
 		return properties.get(UserProperty.CAR);
-	}*/
+	}
 	
-	private void setAvailability(String availability) {
-	   properties.put(UserProperty.STATUS, availability);
+	public void setCar(String newCar) {
+	   properties.put(UserProperty.CAR, newCar);
 	}
 	
 	public boolean isAvailable() {
 	   String status = (String)properties.get(UserProperty.STATUS);
 	   Status statusEnum = Status.valueOf(status.toUpperCase());
 		return statusEnum.equals(Status.AVAILABLE);
+	}
+	
+	private void setAvailability(String availability) {
+	   properties.put(UserProperty.STATUS, availability);
 	}
 	
 	public Rating getRating() {
@@ -45,7 +49,6 @@ public class Driver extends User {
 	      return true;
 	   }
 	   
-	   // if is available in the time frame...
 	   return false;
 	}
 	
