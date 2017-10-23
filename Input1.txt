@@ -1,15 +1,16 @@
-ACCOUNT: Driver, NAME: Jace Wayland, BALANCE: 15, CAR: convertible, STATUS: occupied
-ACCOUNT: Driver, NAME: Jocelyn Fray, BALANCE: 10, CAR: sedan, STATUS: available
-ACCOUNT: Driver, NAME: Luke Garroway, BALANCE: 29, CAR: truck, STATUS: available
-ACCOUNT: Driver, NAME: Alec Lightwood, BALANCE: 30, CAR: crossover, STATUS: occupied
-ACCOUNT: Driver, NAME: Catarina Loss, BALANCE: 25, CAR: sedan, STATUS: available
-ACCOUNT: Driver, NAME: Simon Lewis, BALANCE: 17, CAR: sedan, STATUS: available
-ACCOUNT: Driver, NAME: Jordan Kyle, BALANCE: 30, CAR: truck, STATUS: occupied
-ACCOUNT: Driver, NAME: Sebastian Verlac, BALANCE: 19, CAR: SUV, STATUS: occupied
-ACCOUNT: Driver, NAME: Maryse Lightwood, BALANCE: 35, CAR: sedan, STATUS: available
-ACCOUNT: Driver, NAME: Hodge Starkweather, BALANCE: 10, CAR: crossover, STATUS: available
-ACCOUNT: Customer, NAME: Clary Fray, BALANCE: 80
-ACCOUNT: Customer, NAME: Eric Hillchurch, BALANCE: 45
-ACCOUNT: Customer, NAME: Isabelle Lightwood, BALANCE: 70
-ACCOUNT: Customer, NAME: Magnus Bane, BALANCE: 100
-ACCOUNT: Customer, NAME: Maia Roberts, BALANCE: 50
+ACCOUNT: Driver, NAME: Jace Wayland, BALANCE: 15.40, CAR: convertible, STATUS: occupied
+ACCOUNT: Driver, NAME: Jocelyn Fray, BALANCE: 10.00, CAR: sedan, STATUS: available
+ACCOUNT: Driver, NAME: Luke Garroway, BALANCE: 29.90, CAR: truck, STATUS: available
+ACCOUNT: Driver, NAME: Alec Lightwood, BALANCE: 30.20, CAR: crossover, STATUS: occupied
+ACCOUNT: Driver, NAME: Catarina Loss, BALANCE: 25.00, CAR: sedan, STATUS: available
+ACCOUNT: Driver, NAME: Eric Hillchurch, BALANCE: 17.10, CAR: van, STATUS: available
+ACCOUNT: Driver, NAME: Jordan Kyle, BALANCE: 30.20, CAR: truck, STATUS: occupied
+ACCOUNT: Driver, NAME: Sebastian Verlac, BALANCE: 19.01, CAR: SUV, STATUS: occupied
+ACCOUNT: Driver, NAME: Maryse Lightwood, BALANCE: 35.05, CAR: sedan, STATUS: available
+ACCOUNT: Driver, NAME: Hodge Starkweather, BALANCE: 10.10, CAR: crossover, STATUS: available
+ACCOUNT: Customer, NAME: Clary Fray, BALANCE: 80.00
+ACCOUNT: Customer, NAME: Simon Lewis, BALANCE: 45.34
+ACCOUNT: Customer, NAME: Isabelle Lightwood, BALANCE: 70.00
+ACCOUNT: Customer, NAME: Magnus Bane, BALANCE: 0.00
+ACCOUNT: Customer, NAME: Maia Roberts, BALANCE: 50.02
+ACCOUNT: Customer, NAME: Valentine Morgenstern, BALANCE: -0.01

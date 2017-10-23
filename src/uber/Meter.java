@@ -2,18 +2,37 @@ package uber;
 
 import java.util.LinkedList;
 
+/**
+ * The system that keeps track of the rate and the fare for a Uber request.
+ * @author FaithChan
+ *
+ */
 public class Meter implements Observer {
    private double rate;
    
+   /**
+    * Constructor. Registers itself with a Subject (RequestHandler) and sets
+    * its rate to the parameter given.
+    * @param handler The RequestHandler to observe.
+    * @param rate The rate for the fare.
+    */
    public Meter(Subject handler, double rate) {
       handler.registerObserver(this);
       this.rate = rate;
    }
    
+   /**
+    * Gets the rate.
+    * @return
+    */
    public double getRate() {
       return this.rate;
    }
    
+   /**
+    * Sets the rate to the new rate, newRate.
+    * @param newRate The new rate.
+    */
    private void setRate(double newRate) {
       this.rate = newRate;
    }

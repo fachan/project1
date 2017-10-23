@@ -8,6 +8,13 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * The Uber system. Contains the grid containing all of the users in the 
+ * system, keeps track of the Drivers and Customers in the system, and 
+ * controls the movements of these Users in the grid.
+ * @author FaithChan
+ *
+ */
 public class Uber {
 	private static final int GRID_SIZE = 10;
 	private static int nextUserID;
@@ -18,6 +25,13 @@ public class Uber {
 	private HashMap<Integer, Driver> drivers;
 	private HashMap<Integer, Customer> customers;
 	
+	/**
+	 * Uber constructor. Uses the input parameters to create a grid of the 
+	 * appropriate size; will default to a predetermined value if negative.
+	 * Initializes the HashMaps of Customers and Drivers.
+	 * @param rows The number of rows the grid will have.
+	 * @param cols The number of columns the grid will have.
+	 */
 	public Uber(int rows, int cols) {
 	   this.rows = rows;
       this.cols = cols;
@@ -36,14 +50,28 @@ public class Uber {
 	   this.nextUserID = 0;
 	}
 	
+	/**
+	 * Gets the number of rows in the grid.
+	 * @return The integer number of rows.
+	 */
 	public int getGridRows() {
 	   return this.rows;
 	}
 	
+	/**
+	 * Gets the number of columns in the grid.
+	 * @return The integer number of columns.
+	 */
 	public int getGridCols() {
 	   return this.cols;
 	}
 	
+	/**
+	 * Checks if the paramter Location loc is within the bounds of the Uber
+	 * grid.
+	 * @param loc The Location being checked
+	 * @return true if the location is within bounds; false if not.
+	 */
 	public boolean withinGrid(Location loc) {
 	   int row = loc.getRow();
 	   int col = loc.getCol();
@@ -59,6 +87,10 @@ public class Uber {
 	   return true;
 	}
 	
+	/**
+	 * Checks if there are any drivers in the Uber system.
+	 * @return false if there are none; true otherwise.
+	 */
 	public boolean hasDrivers() {
 	   if (getDrivers() == null) {
 	      return false;
@@ -71,14 +103,27 @@ public class Uber {
 	   return true;
 	}
 	
+	/**
+	 * Gets the HashMap of drivers held by Uber.
+	 * @return A HashMap of Drivers, mapped to their IDs.
+	 */
 	public HashMap<Integer, Driver> getDrivers() {
 	   return this.drivers;
 	}
 	  
+	/**
+	 * Gets the HashMap of Customers on Uber.
+	 * @return A HashMap of Customers, mapped to their IDs.
+	 */
    public HashMap<Integer, Customer> getCustomers() {
       return this.customers;
    }
 	
+   /**
+    * Initializes the Uber grid using the Users described in the input file.
+    * @param filename The name of the input file.
+    * @throws FileNotFoundException
+    */
 	public void initGrid(String filename) throws FileNotFoundException {
 	   File inputFile = new File(filename);
 	   Scanner in = new Scanner(inputFile);
@@ -99,12 +144,24 @@ public class Uber {
 	   printGrid();
 	}
 	
+	/**
+	 * Sets the location of the user to the parameter Location destination, and
+	 * updates the state of the grid.
+	 * @param user The user whose position is to be changed.
+	 * @param destination The new location of the user.
+	 */
 	public void setLocation(User user, Location destination) {
 	   grid[user.getLocation().getRow()][user.getLocation().getCol()] = null;
 	   user.setLocation(destination);
       grid[destination.getRow()][destination.getCol()] = user;
 	}
 	
+	/**
+	 * Places the user in the Uber grid. Adds them to the appropriate lists--
+	 * Customer or Driver.
+	 * @param properties The string to be parsed for properties.
+	 * @param loc The location at which to place the user.
+	 */
 	private void placeUser(String properties, Location loc) {
 	   HashMap newMap = UberHelper.parseProperties(properties);
 	   User newUser;
@@ -128,6 +185,9 @@ public class Uber {
             newUser;
 	}
 	
+	/**
+	 * Helper function to print the grid.
+	 */
 	public void printGrid() {
 	   int x, y;
 	   int rows = getGridRows();

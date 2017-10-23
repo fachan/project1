@@ -8,7 +8,12 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Iterator;
-
+/**
+ * Simulator (main) for the Uber program. Uses "Input1.txt" as its input, and 
+ * stores the log files in "TripLog.txt" and "FinalLog.txt".
+ * @author FaithChan
+ *
+ */
 public class UberSimulator {
    static final String INPUT_FILE = "./Input1.txt";
    static final String TRIP_LOG = "./TripLog.txt";
@@ -19,6 +24,11 @@ public class UberSimulator {
    static PrintStream ps;
    static PrintStream ps2;
    
+   /**
+    * Main function--starts the Uber system. The parameter String[] args is 
+    * not used here. Prints a message an exits upon error.
+    * @param args Not used here.
+    */
    public static void main(String[] args) {
       Uber system = new Uber(25, 20);
       RequestHandler handler = new RequestHandler(system);
@@ -37,7 +47,7 @@ public class UberSimulator {
       } catch (FileNotFoundException e) {
          System.err.println("Could not find log files");
          e.printStackTrace();
-         System.exit(0);
+         System.exit(-1);
       }
       
       Request r10, r11, r12, r13, r14, r15;
@@ -91,6 +101,11 @@ public class UberSimulator {
       printFinalStates(system);
    }
    
+   /** 
+    * Prints final states of the Uber Customers and Drivers in the final state
+    * log.
+    * @param system The Uber system whose state is reported.
+    */
    public static void printFinalStates(Uber system) {
       File finalLog = new File(FINAL_STATE_LOG);
       
@@ -101,7 +116,7 @@ public class UberSimulator {
       } catch (FileNotFoundException e) {
          System.err.println("Could not find log files");
          e.printStackTrace();
-         System.exit(0);
+         System.exit(-1);
       }
       
       HashMap<Integer, Driver> drivers = system.getDrivers();

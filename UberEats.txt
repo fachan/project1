@@ -1,0 +1,15 @@
+There is not much that must be changed in this program to implement UberEats. 
+The Users (Drivers and Customers) in the program are essentially the same; the 
+Drivers simply carry cargo that is slightly different. Although there was little
+use for it in the regular implementation of Uber, the Enum type Delivery seen 
+here makes the transition to UberEats quite simple. Using this Enum type allows
+the user to specify what kind of delivery is being made--in UberEats, this 
+delivery is food, and in the regular Uber implementation, the delivery is 
+passengers. This makes it easy to see that the functionality around these 
+deliveries should not change very much--the Requests still contain source and 
+destination locations, for example, the Meter can still keep track of the 
+distance between locations to calculate the cost of delivering food to a customer,
+and the Drivers still must follow the procedure of traveling from their starting
+points, to an alternate starting point (to pick up the food in the case of 
+UberEats), and to a final destination (to the customer's house). The rest of the
+program is likely to follow in a similar way.

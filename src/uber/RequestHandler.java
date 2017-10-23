@@ -12,12 +12,23 @@ import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Handles Uber requests; is responsible for choosing an appropriate driver for
+ * the User who sent the Request. Signals Observers when something changes in
+ * the system.
+ * @author FaithChan
+ *
+ */
 public class RequestHandler implements Comparator<Driver>, Subject {
    private Uber system;
    private Customer requester;
    private ArrayList<Observer> observers;
    private static Lock inputLock;
    
+   /**
+    * Constructor for RequestHandler. Takes as an argument the Uber system.
+    * @param system The Uber system.
+    */
    public RequestHandler(Uber system) {
       this.system = system;
       this.requester = null;
@@ -25,6 +36,10 @@ public class RequestHandler implements Comparator<Driver>, Subject {
       RequestHandler.inputLock = new ReentrantLock();
    }
    
+   /** 
+    * Get the Customer who made the Request.
+    * @return The requester.
+    */
    public Customer getRequester() {
       return this.requester;
    }
@@ -34,6 +49,11 @@ public class RequestHandler implements Comparator<Driver>, Subject {
       this.requester = requester;
    }
    
+   /**
+    * Sets the lock to the value specified by the parameter.
+    * @param lock false if the desired state of the lock is unlocked; true 
+    * otherwise.
+    */
    public void setLock(boolean lock) {
       if (lock) {
          this.inputLock.lock();
@@ -42,6 +62,9 @@ public class RequestHandler implements Comparator<Driver>, Subject {
       }
    }
    
+   /**
+    * Checks if there are any drivers in the system.
+    */
    public void checkDrivers() {
       if (!system.hasDrivers()) {
          UberHelper.write("There are no drivers in the system. Exiting...");
@@ -49,6 +72,12 @@ public class RequestHandler implements Comparator<Driver>, Subject {
       }
    }
    
+   /**
+    * Verifies that the location in the newRequest is appropriate (e.g. within
+    * the grid).
+    * @param newRequest The Request being considered.
+    * @return true if the location can be verified; false if not.
+    */
    private boolean verifyLocation(Request newRequest) {
       Location src = newRequest.getSource();
       Location dest = newRequest.getDestination();
@@ -77,6 +106,11 @@ public class RequestHandler implements Comparator<Driver>, Subject {
       return true;
    }
    
+   /**
+    * Organizes the system's list of drivers according to their proximity from
+    * the requester, and then their rate.
+    * @return The ordered queue of Drivers.
+    */
    private PriorityQueue<Driver> prioritizeDrivers() {
       PriorityQueue<Driver> drivers = new 
             PriorityQueue<Driver>(this);

@@ -2,6 +2,11 @@ package uber;
 
 import java.util.HashMap;
 
+/**
+ * A person that uses Uber.
+ * @author FaithChan
+ *
+ */
 public class User {
 	protected HashMap<UserProperty, String> properties;
 	protected Location loc;

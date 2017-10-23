@@ -64,11 +64,6 @@ public class UberTest {
    }
 
    @Test
-   public void testHasDrivers() {
-      fail("Not yet implemented");
-   }
-
-   @Test
    public void testSetLocation() {
       fail("Not yet implemented");
    }
