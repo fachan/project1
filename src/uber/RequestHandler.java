@@ -17,14 +17,12 @@ public class RequestHandler implements Comparator<Driver>, Subject {
    private Customer requester;
    private ArrayList<Observer> observers;
    private static Lock inputLock;
-   private boolean requesterSet;
    
    public RequestHandler(Uber system) {
       this.system = system;
       this.requester = null;
       this.observers = new ArrayList<Observer>();
       RequestHandler.inputLock = new ReentrantLock();
-      this.requesterSet = false;
    }
    
    public Customer getRequester() {
@@ -34,7 +32,6 @@ public class RequestHandler implements Comparator<Driver>, Subject {
    /* For testing purposes */
    public void setRequester(Customer requester) {
       this.requester = requester;
-      this.requesterSet = true;
    }
    
    public void setLock(boolean lock) {
@@ -47,7 +44,7 @@ public class RequestHandler implements Comparator<Driver>, Subject {
    
    public void checkDrivers() {
       if (!system.hasDrivers()) {
-         System.out.println("There are no drivers in the system. Exiting...");
+         UberHelper.write("There are no drivers in the system. Exiting...");
          System.exit(0);
       }
    }
@@ -101,7 +98,7 @@ public class RequestHandler implements Comparator<Driver>, Subject {
       if (!customers.containsKey(ID)) {
          printIDError(ID);
       }
-      
+
       return customers.get(ID);
    }
    
@@ -126,14 +123,12 @@ public class RequestHandler implements Comparator<Driver>, Subject {
       
       printBorder();
       
-      if (this.requesterSet == false) {
-         setRequester(findCustomer(newRequest.getID()));
-      }
+      setRequester(findCustomer(newRequest.getID()));
    
       if (!verifyLocation(newRequest))
       {
          printBorder();
-         System.out.println();
+         UberHelper.write("");
          return;
       }
       
@@ -169,10 +164,10 @@ public class RequestHandler implements Comparator<Driver>, Subject {
                requester.getLocation().distanceTo(nextDriver.getLocation());
          System.out.printf("%3f ", distance);
       }
-        System.out.println();*/
+        UberHelper.write();*/
       
       printBorder();
-      System.out.println();
+      UberHelper.write("");
    }
    
    public void getScore(Driver driver) {
@@ -204,11 +199,11 @@ public class RequestHandler implements Comparator<Driver>, Subject {
       setLock(true);
       
       try {
-         System.out.println("Ride with driver " + driver.getID() + 
+         UberHelper.write("Ride with driver " + driver.getID() + 
                " for customer " + customer.getID() + " has ended.");
          
          getScore(driver);
-         System.out.println("\tScore successfully added.\n");
+         UberHelper.write("\tScore successfully added.\n");
       } finally {
          setLock(false);
       }
@@ -254,22 +249,22 @@ public class RequestHandler implements Comparator<Driver>, Subject {
       Location src = newRequest.getSource();
       Location dest = newRequest.getDestination();
       
-      System.out.println("Customer ID: " + newRequest.getID());
-      System.out.println("New request: (" + src.getRow() + ", " + 
+      UberHelper.write("Customer ID: " + newRequest.getID());
+      UberHelper.write("New request: (" + src.getRow() + ", " + 
             src.getCol() + ") to (" + dest.getRow() + ", " +
             dest.getCol() + ")");
-      System.out.println();
+      UberHelper.write("");
    }
    
    private void printOutOfGrid(int ID, Location loc) {
-      System.out.println("The requested pickup/destination location " + 
+      UberHelper.write("The requested pickup/destination location " + 
             loc.getCol() + ", " + loc.getRow() + " for customer " + 
             ID + " is not within the Uber grid. " + 
             "Request canceled.");
    }
    
    private void printIDError(int ID) {
-      System.out.println("Customer ID " + ID + " not found. " + 
+      UberHelper.write("Customer ID " + ID + " not found. " + 
             " Request canceled.");
    }
    
@@ -277,13 +272,13 @@ public class RequestHandler implements Comparator<Driver>, Subject {
       Location src = newRequest.getSource();
       Location dest = newRequest.getDestination();
       
-      System.out.println("No drivers found for trip from " + 
+      UberHelper.write("No drivers found for trip from " + 
             src.getCol() + ", " + src.getRow() + " to " + 
             dest.getCol() + ", " + dest.getRow() + " for user " + 
             newRequest.getID() + ". Please try again later.");
    }
    
    private void printBorder() {
-      System.out.println("--------------------------------------------------");
+      UberHelper.write("--------------------------------------------------");
    }
 }

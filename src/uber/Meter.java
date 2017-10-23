@@ -1,6 +1,5 @@
 package uber;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Meter implements Observer {
@@ -58,33 +57,33 @@ public class Meter implements Observer {
    }
    
    private void printTransactionFailure(Customer customer, double fare) {
-      System.out.println("Transaction failed: Insufficient funds. ");
-      System.out.printf("\tFare: %.2f\n", fare);
-      System.out.printf("\tCustomer %d balance: %.2f\n",
-            customer.getID(), customer.getBalance());
+      UberHelper.write("Transaction failed: Insufficient funds. ");
+      UberHelper.write(String.format("\tFare: %.2f", fare));
+      UberHelper.write(String.format("\tCustomer %d balance: %.2f",
+            customer.getID(), customer.getBalance()));
    }
    
    private void printReceipt(Driver driver, Customer customer, 
          double oldCBalance, double oldDBalance, double fare) {
-            System.out.println("Receipt:");
+      UberHelper.write("Receipt:");
       System.out.printf("\tFare: %.2f\n", fare);
       
-      System.out.println();
+      UberHelper.write("");
       
-      System.out.println("\tCustomer balance: ");
-      System.out.printf("\t\t  %.2f\n", oldCBalance);
-      System.out.printf("\t\t- %.2f\n", fare);
-      System.out.printf("\t\t= %.2f\n", customer.getBalance());
+      UberHelper.write("\tCustomer balance: ");
+      UberHelper.write(String.format("\t\t  %.2f", oldCBalance));
+      UberHelper.write(String.format("\t\t- %.2f", fare));
+      UberHelper.write(String.format("\t\t= %.2f", customer.getBalance()));
       
-      System.out.println();
+      UberHelper.write("");
       
-      System.out.println("\tDriver balance: ");
-      System.out.printf("\t\t  %.2f\n", oldDBalance);
-      System.out.printf("\t\t+ %.2f\n", fare);
-      System.out.printf("\t\t= %.2f\t* %1.2f\n", 
-            driver.getBalance() / Driver.DRIVER_SHARE, Driver.DRIVER_SHARE);
-      System.out.printf("\t\t= %.2f\n", driver.getBalance());
+      UberHelper.write(String.format("\tDriver balance: "));
+      UberHelper.write(String.format("\t\t  %.2f", oldDBalance));
+      UberHelper.write(String.format("\t\t+ %.2f", fare));
+      UberHelper.write(String.format("\t\t= %.2f\t* %1.2f", 
+            driver.getBalance() / Driver.DRIVER_SHARE, Driver.DRIVER_SHARE));
+      UberHelper.write(String.format("\t\t= %.2f", driver.getBalance()));
       
-      System.out.println();
+      UberHelper.write("");
    }
 }

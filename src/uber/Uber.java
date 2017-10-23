@@ -44,14 +44,6 @@ public class Uber {
 	   return this.cols;
 	}
 	
-	/*public void addDriver(Driver newDriver) {
-	   
-	}
-	
-	public void addCustomer(Customer newCustomer) {
-	   
-	}*/
-	
 	public boolean withinGrid(Location loc) {
 	   int row = loc.getRow();
 	   int col = loc.getCol();

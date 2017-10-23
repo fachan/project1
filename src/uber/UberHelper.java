@@ -1,5 +1,6 @@
 package uber;
 
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -8,6 +9,11 @@ public class UberHelper {
    private static final String CATEGORY_DELIMITER = ": ";
    private static final int CATEGORY_LOC = 0;
    private static final int VALUE_LOC = 1;
+   
+   public static void write(String str) {
+      UberSimulator.ps.println(str);
+      UberSimulator.ps2.println(str);
+   }
    
    public static HashMap parseProperties(String properties) {
       String[] entry;
