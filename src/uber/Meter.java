@@ -46,6 +46,14 @@ public class Meter implements Observer {
       return distance * rate;
    }
    
+   /**
+    * Updates the balances of the driver and the customer after a trip has 
+    * successfully been scheduled.
+    * @param driver The Driver for the Request.
+    * @param customer The Customer who sent the Request.
+    * @param fare The fare for the trip.
+    * @return Negative if the customer is not able to pay the fare.
+    */
    public int updateBalance(Driver driver, Customer customer, double fare) {
       double driverBalance = driver.computeBalance(fare);
       double customerBalance = customer.computeBalance(fare);
@@ -59,6 +67,11 @@ public class Meter implements Observer {
       return 0;
    }
    
+   /**
+    * Updates the balances of the driver and the customer, based on the
+    * route from the Request. Prints the receipt afterwards. This is 
+    * called when the Subject (the RequestHandler) notifies it.
+    */
    public double update(Driver driver, Customer customer, 
          LinkedList<Location> route) {
       double fare = getFare(route);
@@ -75,6 +88,12 @@ public class Meter implements Observer {
       return fare;
    }
    
+   /**
+    * Prints an error message for a customer whose balance is not enough to
+    * cover the fare.
+    * @param customer The Customer who sent the request.
+    * @param fare The fare for the requested trip.
+    */
    private void printTransactionFailure(Customer customer, double fare) {
       UberHelper.write("Transaction failed: Insufficient funds. ");
       UberHelper.write(String.format("\tFare: %.2f", fare));
@@ -82,6 +101,14 @@ public class Meter implements Observer {
             customer.getID(), customer.getBalance()));
    }
    
+   /**
+    * Prints the summary of fares and balances for the request.
+    * @param driver The driver for the request
+    * @param customer The customer who sent the request
+    * @param oldCBalance The customer's old balance
+    * @param oldDBalance The driver's old balance
+    * @param fare The fare for the trip
+    */
    private void printReceipt(Driver driver, Customer customer, 
          double oldCBalance, double oldDBalance, double fare) {
       UberHelper.write("Receipt:");
