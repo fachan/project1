@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class UberSimulator {
    static final String INPUT_FILE = "./Input1.txt";
@@ -24,6 +25,7 @@ public class UberSimulator {
       Meter meter = new Meter(handler, RATE);
       RouteTimer timer = new RouteTimer(handler, SPEED);
       HashMap<Integer, Customer> customers;
+      HashMap<Integer, Driver> drivers;
       
       File tripLog = new File(TRIP_LOG);
       File finalLoc = new File(FINAL_STATE_LOG);
@@ -49,6 +51,22 @@ public class UberSimulator {
       }
       
       customers = system.getCustomers();
+      drivers = system.getDrivers();
+      
+      Rating r0 = new Rating(2.43, 10);
+      drivers.get(0).setRating(r0);
+      
+      Rating r1 = new Rating(3.03, 9);
+      drivers.get(1).setRating(r1);
+      
+      Rating r2 = new Rating(4.55, 15);
+      drivers.get(2).setRating(r2);
+      
+      Rating r3 = new Rating(4.1, 9);
+      drivers.get(3).setRating(r3);
+      
+      Rating r4 = new Rating(4.77, 90);
+      drivers.get(4).setRating(r4);
 
       r10 = customers.get(10).sendRequest(new Location(100, 100));
       r11 = customers.get(11).sendRequest(new Location(20, 15));
@@ -65,7 +83,51 @@ public class UberSimulator {
       handler.processRequest(r14);
       handler.processRequest(r15);
       
+      try {
+         Thread.currentThread().sleep(8000);
+      }  catch (InterruptedException e) {}
+      
       //print final states
-      system.printGrid();
+      printFinalStates(system);
+   }
+   
+   public static void printFinalStates(Uber system) {
+      File finalLog = new File(FINAL_STATE_LOG);
+      
+      try {
+         FileOutputStream stream = new FileOutputStream(finalLog);
+         ps = new PrintStream(stream);
+         System.setOut(ps);
+      } catch (FileNotFoundException e) {
+         System.err.println("Could not find log files");
+         e.printStackTrace();
+         System.exit(0);
+      }
+      
+      HashMap<Integer, Driver> drivers = system.getDrivers();
+      HashMap<Integer, Customer> customers = system.getCustomers();
+      
+      System.out.println("Drivers:");
+      System.out.println("Location\t\t\t\tBalance\t\tScore");
+      for (Iterator<Integer> i = drivers.keySet().iterator(); i.hasNext(); ) {
+         Driver next = drivers.get(i.next());
+         Location loc = next.getLocation();
+         System.out.print("Driver " + next.getID() + ": (" + loc.getRow() + 
+               ", " + loc.getCol() + ")");
+         System.out.printf("\t\t$%.2f", next.getBalance());
+         System.out.printf("\t\t%.2f\n", next.getRating().getScore());
+      }
+      
+      System.out.println();
+      
+      System.out.println("Customer locations:");
+      System.out.println("Location\t\t\t\tBalance");
+      for (Iterator<Integer> i = customers.keySet().iterator(); i.hasNext(); ) {
+         Customer next = customers.get(i.next());
+         Location loc = next.getLocation();
+         System.out.print("Customer " + next.getID() + ": (" + loc.getRow() + 
+               ", " + loc.getCol() + ")");
+         System.out.printf("\t\t$%.2f\n", next.getBalance());
+      }
    }
 }
