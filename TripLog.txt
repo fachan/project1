@@ -1,0 +1,91 @@
+--------------------------------------------------
+Customer ID: 10
+New request: (16, 0) to (100, 100)
+
+The requested pickup/destination location 100, 100 for customer 10 is not within the Uber grid. Request canceled.
+--------------------------------------------------
+
+--------------------------------------------------
+Customer ID: 11
+New request: (7, 13) to (20, 15)
+
+Receipt:
+
+	Customer balance: 
+		  10.00
+		- 11.54
+		= 33.80
+
+	Driver balance: 
+		  45.34
+		+ 11.54
+		= 21.54	* 0.75
+		= 16.16
+
+--------------------------------------------------
+
+--------------------------------------------------
+Customer ID: 12
+New request: (19, 19) to (10, 1)
+
+Receipt:
+
+	Customer balance: 
+		  25.00
+		- 23.48
+		= 46.52
+
+	Driver balance: 
+		  70.00
+		+ 23.48
+		= 48.48	* 0.75
+		= 36.36
+
+--------------------------------------------------
+
+--------------------------------------------------
+Customer ID: 13
+New request: (15, 11) to (0, 0)
+
+Transaction failed: Insufficient funds. 
+	Fare: 22.50
+	Customer 13 balance: 0.00
+--------------------------------------------------
+
+--------------------------------------------------
+Customer ID: 14
+New request: (18, 0) to (2, 5)
+
+Receipt:
+
+	Customer balance: 
+		  17.10
+		- 28.62
+		= 21.40
+
+	Driver balance: 
+		  50.02
+		+ 28.62
+		= 45.72	* 0.75
+		= 34.29
+
+--------------------------------------------------
+
+--------------------------------------------------
+Customer ID: 15
+New request: (3, 12) to (1, 1)
+
+Transaction failed: Insufficient funds. 
+	Fare: 13.13
+	Customer 15 balance: -0.01
+--------------------------------------------------
+
+Ride with driver 1 for customer 11 has ended.
+	Score successfully added.
+
+Ride with driver 4 for customer 12 has ended.
+	Score successfully added.
+
+Ride with driver 5 for customer 14 has ended.
+	Score successfully added.
+

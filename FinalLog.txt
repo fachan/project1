@@ -1,0 +1,21 @@
+Drivers:
+Location				Balance		Score
+Driver 0: (7, 18)		$15.40		2.43
+Driver 1: (20, 15)		$16.16		2.93
+Driver 2: (1, 1)		$29.90		4.55
+Driver 3: (1, 1)		$30.20		4.10
+Driver 4: (10, 1)		$36.36		4.75
+Driver 5: (2, 5)		$34.29		1.00
+Driver 6: (12, 7)		$30.20		1.00
+Driver 7: (16, 4)		$19.01		1.00
+Driver 8: (3, 19)		$35.05		1.00
+Driver 9: (0, 0)		$10.10		1.00
+
+Customer locations:
+Location				Balance
+Customer 10: (16, 0)		$80.00
+Customer 11: (20, 15)		$33.80
+Customer 12: (10, 1)		$46.52
+Customer 13: (0, 0)		$0.00
+Customer 14: (2, 5)		$21.40
+Customer 15: (1, 1)		$-0.01
